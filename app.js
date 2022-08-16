@@ -41,11 +41,13 @@ app.post('/upload', (req,res) => {
 });
 
 const addFile = async (fileName, filePath) => {
-   const file = fs.readFileSync(filePath);
-   const fileAdded = await ipfs.add({path: fileName, content: file});
-    const fileHash = fileAdded[0].hash;
+    const file = fs.readFileSync(filePath);
+    let results = [];
+    for await (const result of ipfs.add({path: fileName, content: file})) {
+        results.push(result);
+    }
+    return results[0].cid;
 
-    return fileHash;
 };
 
 app.listen(3000, () => {
