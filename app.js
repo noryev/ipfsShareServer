@@ -1,14 +1,14 @@
-const ipfsClient = require('ipfs-http-client');
-const express = require('express');
-const bodyParser = require('body-parser');
-const fileUpload = require('express-fileupload');
+import ipfsClient from 'ipfs-http-client';
+import express from 'express';
+import { urlencoded } from 'body-parser';
+import fileUpload from 'express-fileupload';
 const fs = require(fs);
 
 const ipfs = new ipfsClient({ host: 'localhost', port: '5001', protocol: 'http'});
 const app = express();
 
 app.set('view engine' , 'ejs');
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(urlencoded({extended: true}));
 app.use(fileUpload());
 
 app.get('/', (req, res) => {
